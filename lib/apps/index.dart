@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:github_repos/apps/repos_list.dart';
+import 'package:github_repos/services/apiservice.dart';
 
-class Index extends StatefulWidget {
-  const Index({super.key});
+class Index extends StatelessWidget {
+  Index({super.key});
+  ApiService api = ApiService();
+  TextEditingController controller = TextEditingController();
 
-  @override
-  State<Index> createState() => _IndexState();
-}
-
-class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +30,12 @@ class _IndexState extends State<Index> {
             const SizedBox(
               height: 50,
             ),
-            const TextField(
-              style: TextStyle(
+            TextField(
+              controller: controller,
+              style: const TextStyle(
                 fontFamily: 'Montserrat-Thin',
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "Usuário",
                   label: Text("usuário do github"),
                   border: OutlineInputBorder(
@@ -56,12 +55,13 @@ class _IndexState extends State<Index> {
                         horizontal: 50, vertical: 20),
                   ),
                   onPressed: () => {
-                        Navigator.push(
-                          context,
-                          // https://api.github.com/users/{username}/repos
-                          MaterialPageRoute(
-                              builder: (context) => const ReposList()),
-                        )
+                        api.getRepositories("pedrozle")
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           ReposList(username: controller.text)),
+                        // )
                       },
                   child: const Text(
                     'Pesquisar Repos',
