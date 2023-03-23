@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:github_repos/apps/repos_list.dart';
-import 'package:github_repos/services/apiservice.dart';
 
-class Index extends StatelessWidget {
+class Index extends StatefulWidget {
   Index({super.key});
-  ApiService api = ApiService();
+
+  @override
+  State<Index> createState() => _IndexState();
+}
+
+class _IndexState extends State<Index> {
   TextEditingController controller = TextEditingController();
+
+  final String infoSnack = "Por favor, insira o usuário do Github";
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +61,25 @@ class Index extends StatelessWidget {
                         horizontal: 50, vertical: 20),
                   ),
                   onPressed: () => {
-                        api.getRepositories("pedrozle")
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           ReposList(username: controller.text)),
-                        // )
+                        if (controller.text.isNotEmpty)
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ReposList(username: controller.text);
+                                },
+                              ),
+                            )
+                          }
+                        else
+                          {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(infoSnack),
+                              ),
+                            )
+                          }
                       },
                   child: const Text(
                     'Pesquisar Repos',
