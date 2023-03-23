@@ -4,6 +4,16 @@
 
 Um projeto Flutter
 
+## Screenshots
+
+### Home
+
+<img src="./img/Home.png" width="20%"></img>
+
+### Projetos de Fulano
+
+<img src="./img/Repos.png" width="20%"></img>
+
 ## Preparação
 
 Esse projeto tem como objetivo o aprendizado da framework [Flutter](https://github.com/flutter/flutter)
@@ -33,13 +43,3 @@ flutter run
 Este projeto tem como formato um aplicativo de celular para que o usuário possa listar os repositórios públicos disponíveis no Github de um usuário específico.
 
 Após buscar por um usuário, o app retorna a lista dos projetos salvos, uma descrição (se disponível) e um link para acesso a tal repositório.
-
-## Screenshots
-
-### Home
-
-<img src="./img/Home.png" width="20%"></img>
-
-### Projetos de Fulano
-
-<img src="./img/Repos.png" width="20%"></img>
