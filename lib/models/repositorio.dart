@@ -1,17 +1,17 @@
 class Repositorio {
-  String? name, user, avatar, description;
+  String? name, user, repoUrl, description;
 
   Repositorio({
     this.name,
     this.user,
-    this.avatar,
     this.description,
+    this.repoUrl,
   });
 
   Repositorio.fromJson(Map<String, dynamic> json) {
     name = json['full_name'];
     user = json['owner']['login'];
-    avatar = json['owner']['avatar_url'];
     description = json['description'];
+    repoUrl = json['html_url'];
   }
 }

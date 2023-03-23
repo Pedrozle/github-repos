@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:github_repos/models/repositorio.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String usuarioNaoEncontrado =
     "Usuário \${widget.username} não encontrado!";
@@ -110,6 +111,67 @@ class _ReposListState extends State<ReposList> {
                       const SizedBox(
                         height: 32,
                       ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...repositorios.map(
+                                (e) {
+                                  return Card(
+                                    elevation:
+                                        5, // apesar de ser usado para sombreamento, é necessário atenção por se tratar dos níveis que o card será trazido para frente
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 40),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(
+                                        e.name ?? "",
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.25,
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        children: [
+                                          Text(
+                                            e.description ?? 'Sem descrição',
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              height: 1.25,
+                                            ),
+                                          ),
+                                          ElevatedButton.icon(
+                                            onPressed: () {
+                                              launchUrl(
+                                                  Uri.parse(e.repoUrl ?? ""));
+                                            },
+                                            label: const Text(
+                                              "Abrir repositorio",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            icon: const Icon(Icons.link),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   )),
     );
