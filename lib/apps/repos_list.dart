@@ -23,8 +23,8 @@ class _ReposListState extends State<ReposList> {
 
   loadRepositories() async {
     try {
-      final resposta =
-          await Dio().get("https://api.github.com/${widget.username}/repos");
+      final resposta = await Dio()
+          .get("https://api.github.com/users/${widget.username}/repos");
       if (resposta.data != null) {
         setState(
           () {
