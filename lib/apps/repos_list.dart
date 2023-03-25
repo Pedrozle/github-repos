@@ -5,7 +5,7 @@ import 'package:github_repos/models/repositorio.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String usuarioNaoEncontrado = "Usuário \${widget.username} não encontrado!";
+const String usuarioNaoEncontrado = "Usuário não encontrado!";
 
 class ReposList extends StatefulWidget {
   final String username;
@@ -38,6 +38,7 @@ class _ReposListState extends State<ReposList> {
       debugPrint(err.toString());
       setState(() {
         carregando = false;
+        naoExiste = true;
       });
     }
   }
@@ -68,12 +69,11 @@ class _ReposListState extends State<ReposList> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      LoadingAnimationWidget.prograssiveDots(color: Colors.cyan, size: 100),
+                      LoadingAnimationWidget.fourRotatingDots(color: const Color(ColorsEnum.error), size: 100),
                     ],
                   ),
                 )
               : SafeArea(
-                  // minimum: const EdgeInsets.all(12),
                   child: Column(
                   children: [
                     const Text("GitHub",
@@ -108,7 +108,7 @@ class _ReposListState extends State<ReposList> {
                     ),
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(color: Color.fromARGB(255, 91, 120, 148)),
+                        decoration: const BoxDecoration(color: Color.fromARGB(255, 175, 184, 202)),
                         child: SingleChildScrollView(
                           child: Column(
                             children: [

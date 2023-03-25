@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Montserrat',
           brightness: Brightness.light,
           primaryColor: const Color(ColorsEnum.primaryColor),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 239, 237, 241)),
+          scaffoldBackgroundColor: const Color(ColorsEnum.scaffoldColor)),
       home: Index(),
     );
   }
