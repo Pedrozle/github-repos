@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:github_repos/constants/colors.dart';
 import 'package:github_repos/models/repositorio.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String usuarioNaoEncontrado =
-    "Usuário \${widget.username} não encontrado!";
+const String usuarioNaoEncontrado = "Usuário \${widget.username} não encontrado!";
 
 class ReposList extends StatefulWidget {
   final String username;
@@ -23,15 +23,14 @@ class _ReposListState extends State<ReposList> {
 
   loadRepositories() async {
     try {
-      final resposta = await Dio()
-          .get("https://api.github.com/users/${widget.username}/repos");
+      final resposta = await Dio().get("https://api.github.com/users/${widget.username}/repos");
       if (resposta.data != null) {
         setState(
           () {
             naoExiste = false;
             carregando = false;
-            repositorios = List<Repositorio>.from(resposta.data.map(
-                (repositorioJson) => Repositorio.fromJson(repositorioJson)));
+            repositorios =
+                List<Repositorio>.from(resposta.data.map((repositorioJson) => Repositorio.fromJson(repositorioJson)));
           },
         );
       }
@@ -54,8 +53,7 @@ class _ReposListState extends State<ReposList> {
     return Scaffold(
       body: carregando
           ? Center(
-              child: LoadingAnimationWidget.newtonCradle(
-                  color: Colors.cyan, size: 100),
+              child: LoadingAnimationWidget.prograssiveDots(color: const Color(ColorsEnum.secondaryColor), size: 100),
             )
           : naoExiste
               ? Center(
@@ -70,48 +68,47 @@ class _ReposListState extends State<ReposList> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      LoadingAnimationWidget.newtonCradle(
-                          color: Colors.cyan, size: 100),
+                      LoadingAnimationWidget.prograssiveDots(color: Colors.cyan, size: 100),
                     ],
                   ),
                 )
               : SafeArea(
-                  minimum: const EdgeInsets.all(12),
+                  // minimum: const EdgeInsets.all(12),
                   child: Column(
-                    children: [
-                      const Text("GitHub",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat-Bold',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 42,
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(8),
-                            width: 64,
-                            height: 64,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              shape: BoxShape.rectangle,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://github.com/${widget.username}.png"),
-                                  fit: BoxFit.fill),
-                            ),
+                  children: [
+                    const Text("GitHub",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat-Bold',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 42,
+                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                                image: NetworkImage("https://github.com/${widget.username}.png"), fit: BoxFit.fill),
                           ),
-                          Text(widget.username,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              )),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      Expanded(
+                        ),
+                        Text(repositorios[0].user!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(color: Color.fromARGB(255, 91, 120, 148)),
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -119,50 +116,62 @@ class _ReposListState extends State<ReposList> {
                                 (e) {
                                   return Card(
                                     elevation:
-                                        5, // apesar de ser usado para sombreamento, é necessário atenção por se tratar dos níveis que o card será trazido para frente
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 40),
+                                        1, // apesar de ser usado para sombreamento, é necessário atenção por se tratar dos níveis que o card será trazido para frente
+                                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: ListTile(
-                                      title: Text(
-                                        e.name ?? "",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 1.25,
-                                        ),
-                                      ),
-                                      subtitle: Column(
-                                        children: [
-                                          Text(
-                                            e.description ?? 'Sem descrição',
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              height: 1.25,
-                                            ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: ListTile(
+                                        title: Text(
+                                          e.name!.substring(9),
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.25,
                                           ),
-                                          ElevatedButton.icon(
-                                            onPressed: () {
-                                              launchUrl(
-                                                  Uri.parse(e.repoUrl ?? ""));
-                                            },
-                                            label: const Text(
-                                              "Abrir repositorio",
-                                              style: TextStyle(
-                                                fontSize: 16,
+                                        ),
+                                        subtitle: Column(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 10, bottom: 5),
+                                              child: Text(
+                                                e.description ?? 'Sem descrição',
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  height: 1.25,
+                                                ),
                                               ),
                                             ),
-                                            icon: const Icon(Icons.link),
-                                          ),
-                                        ],
+                                            ElevatedButton.icon(
+                                              style: ElevatedButton.styleFrom(
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                                                backgroundColor: const Color(
+                                                    ColorsEnum.secondaryColor), //const Color.fromRGBO(65, 107, 171, 1),
+                                                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                                              ),
+                                              onPressed: () {
+                                                launchUrl(Uri.parse(e.repoUrl ?? ""));
+                                              },
+                                              label: const Text(
+                                                "Abrir repositorio",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              icon: const Icon(Icons.link),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   );
@@ -171,9 +180,10 @@ class _ReposListState extends State<ReposList> {
                             ],
                           ),
                         ),
-                      )
-                    ],
-                  )),
+                      ),
+                    )
+                  ],
+                )),
     );
   }
 }

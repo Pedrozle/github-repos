@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:github_repos/apps/repos_list.dart';
+import 'package:github_repos/constants/colors.dart';
 
 class Index extends StatefulWidget {
   Index({super.key});
@@ -44,8 +45,7 @@ class _IndexState extends State<Index> {
               decoration: const InputDecoration(
                   hintText: "Usuário",
                   label: Text("usuário do github"),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)))),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(16)))),
             ),
             const SizedBox(
               height: 10,
@@ -54,11 +54,10 @@ class _IndexState extends State<Index> {
               width: 500,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    backgroundColor: const Color.fromRGBO(65, 107, 171, 1),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 20),
+                    animationDuration: const Duration(milliseconds: 700),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                    backgroundColor: const Color(ColorsEnum.primaryColor), //const Color.fromRGBO(65, 107, 171, 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                   ),
                   onPressed: () => {
                         if (controller.text.isNotEmpty)
@@ -83,10 +82,7 @@ class _IndexState extends State<Index> {
                       },
                   child: const Text(
                     'Pesquisar Repos',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xFFFFFFFF),
-                        fontFamily: 'Montserrat-Thin'),
+                    style: TextStyle(fontSize: 20, color: Color(0xFFFFFFFF), fontFamily: 'Montserrat-Thin'),
                   )),
             ),
           ],

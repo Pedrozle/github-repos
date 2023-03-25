@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:github_repos/apps/index.dart';
+import 'package:github_repos/constants/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,12 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromRGBO(65, 107, 171, 1)),
-        scaffoldBackgroundColor: Color.fromARGB(255, 242, 242, 246),
-        useMaterial3: true,
-        fontFamily: 'Montserrat',
-      ),
+          fontFamily: 'Montserrat',
+          brightness: Brightness.light,
+          primaryColor: const Color(ColorsEnum.primaryColor),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 239, 237, 241)),
       home: Index(),
     );
   }
