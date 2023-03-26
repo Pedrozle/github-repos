@@ -127,7 +127,7 @@ class _ReposListState extends State<ReposList> {
                                       padding: const EdgeInsets.all(16.0),
                                       child: ListTile(
                                         title: Text(
-                                          e.name!.substring(9),
+                                          e.name!.split('/')[1],
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                             fontFamily: 'Ubuntu',
