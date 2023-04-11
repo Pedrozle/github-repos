@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color(ColorsEnum.primaryColor),
           scaffoldBackgroundColor: const Color(ColorsEnum.scaffoldColor)),
       home: Index(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

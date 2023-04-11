@@ -8,8 +8,8 @@ Um projeto Flutter
 
 ### Home | Projetos de Fulano
 
-<img src="./img/Home.svg" width="20%"></img>
-<img src="./img/Repos.svg" width="20%"></img>
+<img src="./img/home.png" width="20%"></img>
+<img src="./img/repo.png" width="20%"></img>
 
 ### Documentação
 
